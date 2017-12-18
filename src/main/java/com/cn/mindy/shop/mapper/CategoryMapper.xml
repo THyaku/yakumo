@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.mindy.shop.mapper.CategoryMapper">
+
+	  <resultMap type="category" id="categoryMaps">
+	  
+	      <id property="cid" column="cid"/>
+	      
+	      <result property="cname"  column="cname"/>
+	      
+	      <collection property="categorySecond" ofType="categorySecond">
+	
+	         <id column="csid" property="csid"/>
+	         <result column="csname" property="csname"/>
+	         <result column="cid" property="cid"/>
+	         
+	      </collection>
+	  
+	  </resultMap>
+   
+	<select id="queryAll"  resultMap="categoryMaps">
+	    
+	       select c.*,cs.* from category c,categorysecond cs where c.cid = cs.cid
+	      
+	</select>
+	
+	
+</mapper>

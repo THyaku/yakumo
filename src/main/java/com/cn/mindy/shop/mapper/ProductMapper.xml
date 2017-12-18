@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cn.mindy.shop.mapper.ProductMapper">
+
+    <!-- 热门商品 queryNew-->
+   <select id="query" parameterType="int" resultType="product">
+         select * from product where is_hot=#{value} limit 0,10 
+   </select>
+  
+   
+   
+   <!-- 最新商品 queryNew-->
+
+    <select id="queryNews" resultType="product">
+        select * from product order by pdate desc limit 0,10;
+    </select>
+    
+    
+    
+    <!-- 根据pid获取指定商品 -->
+    <select id="queryPorductByPid" parameterType="int" resultType="Product">
+           select * from product where pid = #{value}
+    </select>
+    
+    
+    <!-- 查询指定cid的商品总共记录数  -->
+	  <select id="queryAllCount" parameterType="int" resultType="int">
+	       select count(*) from product p,category c,categorysecond s
+	         where p.csid = s.csid and c.cid = s.cid and c.cid = #{value}
+	  </select>
+	  
+    
+    <!-- public PageBean<Product> queryAllByPage(icid,begin,limit) -->
+    <select id="queryAllByPage" parameterType="pageVo" resultType="product">
+             select p.* from product p,category c,categorysecond s
+              where p.csid = s.csid and c.cid = s.cid and c.cid = #{cid}
+                limit #{begin},#{limit}
+    </select>
+    
+    <!-- public PageBean<Product> queryAllByPage(icid,begin,limit) -->
+    <select id="queryScByPage" parameterType="pageVo" resultType="product">
+              select * from product where csid = #{csid}
+    </select>
+  
+</mapper>
